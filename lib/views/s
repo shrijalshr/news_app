@@ -1,0 +1,13 @@
+
+   Expanded(
+            child: ListView.builder(
+                physics: BouncingScrollPhysics(),
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return Container(
+                    height: 100,
+                    color: index.isEven ? Colors.red : Colors.yellow,
+                    width: double.infinity,
+                  );
+                }),
+          )
