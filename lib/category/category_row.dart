@@ -65,9 +65,9 @@ class CategoryPill extends StatelessWidget {
         // print(id);
       },
       child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           decoration: BoxDecoration(
-            color: isSelected ? Colors.white : null,
+            color: isSelected ? Colors.white : const Color(0xFFf2f3f4),
             borderRadius: BorderRadius.circular(30),
           ),
           child: Text(categoryName ?? "")),

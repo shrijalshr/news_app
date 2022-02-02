@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/news_screen/views/news_screen.dart';
 import 'package:news_app/theme/app_theme.dart';
 import 'package:news_app/views/splash_screen.dart';
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: AppTheme.lightTheme(context),
-        home: const SplashScreen(),
+        home: const FullNewsScreen(),
       ),
     );
   }

@@ -24,7 +24,6 @@ class AppTheme {
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ))),
-            
         textTheme: TextTheme(
             bodyText1: GoogleFonts.montserrat(
               textStyle: const TextStyle(
@@ -41,6 +40,18 @@ class AppTheme {
                 textStyle: const TextStyle(
               color: Colors.black87,
               fontSize: 20,
+              fontWeight: FontWeight.w600,
+            )),
+            headline3: GoogleFonts.montserrat(
+                textStyle: const TextStyle(
+              color: Colors.black87,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            )),
+            headline4: GoogleFonts.montserrat(
+                textStyle: const TextStyle(
+              color: Colors.black87,
+              fontSize: 16,
               fontWeight: FontWeight.w600,
             )),
             subtitle1: GoogleFonts.montserrat(

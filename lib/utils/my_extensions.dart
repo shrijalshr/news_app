@@ -39,12 +39,12 @@ extension ExtendedWidget on Widget {
         ));
   }
 
-  Widget verticalPadding() {
+  Widget verticalPadding([double? top, double? bottom]) {
     return Padding(
         child: this,
-        padding: const EdgeInsets.only(
-          top: 10,
-          bottom: 5,
+        padding: EdgeInsets.only(
+          top: top ?? 10,
+          bottom: bottom ?? 5,
         ));
   }
 

@@ -20,9 +20,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     _newsBloc = BlocProvider.of<NewsBloc>(context);
     _newsBloc?.add(StartEvent());
-    final theme = Theme.of(context);
     final formatDate = DateFormat("E, MMMM D ");
     final today = formatDate.format(DateTime.now());
+    final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     final double appBarHeight = size.height * .3;
     return SafeArea(
