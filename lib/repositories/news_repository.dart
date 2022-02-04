@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 
 import 'package:news_app/models/news_article_model.dart';
+import 'package:news_app/models/news_model.dart';
 import 'package:news_app/repositories/api.dart';
 
 class NewsRepository {
@@ -24,5 +25,21 @@ class NewsRepository {
     }
   }
 
+  Future<List<NewsModel>> fetchNews(int id, apiUrl) async {
+    var response = await Network().getData("/news/$id");
 
+    var data = jsonDecode(response.body);
+    print(data);
+    List<NewsModel> _newsModelList = [];
+
+    if (response.statusCode == 200) {
+      for (var item in data) {
+        NewsModel _articleModel = NewsModel.fromJson(item);
+        _newsModelList.add(_articleModel);
+      }
+      return _newsModelList;
+    } else {
+      return _newsModelList; // empty list
+    }
+  }
 }
