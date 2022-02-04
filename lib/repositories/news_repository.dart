@@ -6,7 +6,7 @@ import 'package:news_app/models/news_article_model.dart';
 import 'package:news_app/repositories/api.dart';
 
 class NewsRepository {
-  Future<List<NewsArticleModel>> fetchNews(apiUrl) async {
+  Future<List<NewsArticleModel>> fetchNewsList(apiUrl) async {
     var response = await Network().getData("/news-list");
 
     var data = jsonDecode(response.body);
@@ -23,4 +23,6 @@ class NewsRepository {
       return _articleModelList; // empty list
     }
   }
+
+
 }
