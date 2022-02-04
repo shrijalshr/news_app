@@ -1,10 +1,12 @@
 part of 'fullnews_bloc.dart';
 
-abstract class FullnewsState extends Equatable {
-  const FullnewsState();
-  
+abstract class FullNewsState extends Equatable {
+  const FullNewsState();
+
   @override
   List<Object> get props => [];
 }
 
-class FullnewsInitial extends FullnewsState {}
+class FullNewsLoadingState extends FullNewsState {}
+
+class NewsLoadedState extends FullNewsState {}
