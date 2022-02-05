@@ -14,15 +14,15 @@ class NewsArticleModel {
   });
 
   int? id;
-  String? categoryId;
+  int? categoryId;
   String? title;
   String? content;
   dynamic link;
   String? image;
   DateTime? createdAt;
   DateTime? updatedAt;
-  String? count;
-  String? type;
+  int? count;
+  int? type;
   String? username;
 
   factory NewsArticleModel.fromJson(Map<String, dynamic> json) =>
