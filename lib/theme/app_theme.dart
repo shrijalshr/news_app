@@ -18,55 +18,55 @@ class AppTheme {
             centerTitle: true,
             elevation: 5,
             shadowColor: Colors.black12,
-            titleTextStyle: GoogleFonts.montserrat(
+            titleTextStyle: GoogleFonts.notoSans(
                 textStyle: const TextStyle(
               color: Colors.black54,
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ))),
         textTheme: TextTheme(
-            bodyText1: GoogleFonts.montserrat(
+            bodyText1: GoogleFonts.notoSans(
               textStyle: const TextStyle(
                 color: Colors.black87,
               ),
             ),
-            headline1: GoogleFonts.montserrat(
+            headline1: GoogleFonts.notoSans(
                 textStyle: const TextStyle(
               color: Colors.black87,
               fontSize: 28,
               fontWeight: FontWeight.w600,
             )),
-            headline2: GoogleFonts.montserrat(
+            headline2: GoogleFonts.notoSans(
                 textStyle: const TextStyle(
               color: Colors.black87,
               fontSize: 20,
               fontWeight: FontWeight.w600,
             )),
-            headline3: GoogleFonts.montserrat(
+            headline3: GoogleFonts.notoSans(
                 textStyle: const TextStyle(
               color: Colors.black87,
               fontSize: 18,
               fontWeight: FontWeight.w600,
             )),
-            headline4: GoogleFonts.montserrat(
+            headline4: GoogleFonts.notoSans(
                 textStyle: const TextStyle(
               color: Colors.black87,
               fontSize: 16,
               fontWeight: FontWeight.w600,
             )),
-            subtitle1: GoogleFonts.montserrat(
+            subtitle1: GoogleFonts.notoSans(
                 textStyle: const TextStyle(
               color: Colors.black54,
               fontSize: 13,
               fontWeight: FontWeight.w400,
             )),
-            subtitle2: GoogleFonts.montserrat(
+            subtitle2: GoogleFonts.notoSans(
                 textStyle: const TextStyle(
               color: Colors.black54,
               fontSize: 13,
               fontWeight: FontWeight.w600,
             )),
-            button: GoogleFonts.montserrat(
+            button: GoogleFonts.notoSans(
                 textStyle: const TextStyle(
               color: Colors.black87,
               fontWeight: FontWeight.w600,
@@ -75,7 +75,7 @@ class AppTheme {
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: Colors.white,
           foregroundColor: Colors.black54,
-          extendedTextStyle: GoogleFonts.montserrat(
+          extendedTextStyle: GoogleFonts.notoSans(
             textStyle: const TextStyle(
               color: Colors.black54,
               fontWeight: FontWeight.w600,
