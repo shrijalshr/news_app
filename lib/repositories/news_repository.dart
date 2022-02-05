@@ -33,10 +33,9 @@ class NewsRepository {
     NewsModel _newsModel = NewsModel();
 
     if (response.statusCode == 200) {
-      for (var item in data) {
-        NewsModel _articleModel = NewsModel.fromJson(item);
-        _newsModel = _articleModel;
-      }
+      NewsModel _articleModel = NewsModel.fromJson(data);
+      _newsModel = _articleModel;
+
       return _newsModel;
     } else {
       return _newsModel; // empty list
