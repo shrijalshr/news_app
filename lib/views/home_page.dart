@@ -4,8 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:news_app/blocs/news_bloc/bloc/news_bloc.dart';
-import 'package:news_app/category/category_row.dart';
+import 'package:news_app/blocs/news_bloc/news_bloc.dart';
+import 'package:news_app/widgets/category_row.dart';
 import 'package:news_app/models/category_model.dart';
 import 'package:news_app/models/news_article_model.dart';
 import 'package:news_app/widgets/dash_container.dart';
@@ -24,8 +24,8 @@ class HomePage extends StatelessWidget {
     final formatDate = DateFormat("E, MMMM D ");
     final today = formatDate.format(DateTime.now());
     final theme = Theme.of(context);
-    final size = MediaQuery.of(context).size;
-    final double appBarHeight = size.height * .3;
+    final size = MediaQuery.of(context).size; 
+    final double appBarHeight = size.height * .25;
     return SafeArea(
       child: Scaffold(
         body: NestedScrollView(
@@ -35,7 +35,6 @@ class HomePage extends StatelessWidget {
                 SliverAppBar(
                   pinned: true,
                   floating: true,
-                  collapsedHeight: kToolbarHeight,
                   backgroundColor: Colors.transparent,
                   expandedHeight: appBarHeight,
                   flexibleSpace: LayoutBuilder(builder: (context, constraints) {
@@ -60,8 +59,8 @@ class HomePage extends StatelessWidget {
                           ),
                           AnimatedContainer(
                             duration: const Duration(milliseconds: 100),
-                            transform: Matrix4.identity()
-                              ..scale(percent, percent),
+                            // transform: Matrix4.identity()
+                            //   ..scale(percent, percent),
                             child: Opacity(
                               opacity: percent,
                               child: Column(
@@ -92,7 +91,6 @@ class HomePage extends StatelessWidget {
                                   ]),
                             ),
                           ),
-                          CategoryRow(),
                         ],
                       ),
                     );
@@ -100,38 +98,46 @@ class HomePage extends StatelessWidget {
                 )
               ];
             },
-            body: BlocBuilder<NewsBloc, NewsState>(
-                builder: (BuildContext context, NewsState state) {
-              if (state is NewsLoadingState) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state is NewsLoadedState) {
-                List<NewsArticleModel> newsList = [];
-                newsList = state.newsList;
+            body: Column(
+              children: [
+                CategoryRow(),
+                BlocBuilder<NewsBloc, NewsState>(
+                    builder: (BuildContext context, NewsState state) {
+                  if (state is NewsLoadingState) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is NewsLoadedState) {
+                    List<NewsArticleModel> newsList = [];
+                    newsList = state.newsList;
 
-                return ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: newsList.length,
-                  itemBuilder: (context, index) {
-                    return NewsTile(
-                      title: newsList[index].title,
-                      categoryId: newsList[index].categoryId,
-                      imgUrl: newsList[index].image,
-                      userName: newsList[index].username,
-                    ).containerPadding();
-                  },
-                );
-              } else if (state is NewsErrorState) {
-                return Center(
-                  child: Text(state.errorMessage),
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            })),
+                    return Expanded(
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: newsList.length,
+                        itemBuilder: (context, index) {
+                          return NewsTile(
+                            newsId: newsList[index].id!,
+                            title: newsList[index].title,
+                            categoryId: newsList[index].categoryId,
+                            imgUrl: newsList[index].image,
+                            userName: newsList[index].username,
+                          ).containerPadding();
+                        },
+                      ),
+                    );
+                  } else if (state is NewsErrorState) {
+                    return Center(
+                      child: Text(state.errorMessage),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
+              ],
+            )),
       ),
     );
   }
