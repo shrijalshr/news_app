@@ -12,7 +12,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
   NewsBloc() : super(NewsInitial()) {
     on<StartEvent>((event, emit) async {
       emit(NewsLoadingState());
-      await newsRepository.fetchNewsList("/news-list").then((value) {
+      await newsRepository.fetchNewsList().then((value) {
         emit(NewsLoadedState(newsList: value));
       }).onError((error, stackTrace) {
         emit(const NewsErrorState(errorMessage: "Sorry"));
