@@ -21,26 +21,27 @@ class CategoryRow extends StatelessWidget {
       } else if (state is CategoryLoadedState) {
         List<CategoryModel> catList = state.categoryList;
         return Container(
-          width: 250,
-          padding: const EdgeInsets.all(4),
-          margin: const EdgeInsets.only(left: 10),
-          decoration: const BoxDecoration(
-            color: Color(0xFFf2f3f4),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              bottomLeft: Radius.circular(30),
+            padding: const EdgeInsets.all(4),
+            margin: const EdgeInsets.only(left: 10),
+            decoration: const BoxDecoration(
+              color: Color(0xFFf2f3f4),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                bottomLeft: Radius.circular(30),
+              ),
             ),
-          ),
-          // child: ListView.builder(
-          //   physics: const BouncingScrollPhysics(),
-          //   scrollDirection: Axis.horizontal,
-          //   itemCount: catList.length,
-          //   itemBuilder: (context, index) => CategoryPill(
-          //     categoryId: catList[index].id,
-          //     categoryName: catList[index].category,
-          //   ),
-          // ),
-        );
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: catList
+                    .map((e) => CategoryPill(
+                          categoryId: e.id,
+                          categoryName: e.category,
+                        ))
+                    .toList(),
+              ),
+            ));
       } else if (state is CategoryErrorState) {
         return Center(child: Text(state.errorMessage));
       } else {
@@ -54,7 +55,7 @@ class CategoryPill extends StatelessWidget {
   const CategoryPill(
       {Key? key, this.categoryId, this.categoryName, this.isSelected = false})
       : super(key: key);
-  final String? categoryId;
+  final int? categoryId;
   final String? categoryName;
   final bool isSelected;
   @override
