@@ -7,7 +7,7 @@ import 'package:news_app/models/news_model.dart';
 import 'package:news_app/repositories/api.dart';
 
 class NewsRepository {
-  Future<List<NewsArticleModel>> fetchNewsList(apiUrl) async {
+  Future<List<NewsArticleModel>> fetchNewsList() async {
     var response = await Network().getData("/news-list");
 
     var data = jsonDecode(response.body);
@@ -25,21 +25,21 @@ class NewsRepository {
     }
   }
 
-  Future<List<NewsModel>> fetchNews(int id, apiUrl) async {
+  Future<NewsModel> fetchNews(int id) async {
     var response = await Network().getData("/news/$id");
 
     var data = jsonDecode(response.body);
     print(data);
-    List<NewsModel> _newsModelList = [];
+    NewsModel _newsModel = NewsModel();
 
     if (response.statusCode == 200) {
       for (var item in data) {
         NewsModel _articleModel = NewsModel.fromJson(item);
-        _newsModelList.add(_articleModel);
+        _newsModel = _articleModel;
       }
-      return _newsModelList;
+      return _newsModel;
     } else {
-      return _newsModelList; // empty list
+      return _newsModel; // empty list
     }
   }
 }
