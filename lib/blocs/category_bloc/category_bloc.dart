@@ -21,8 +21,10 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         });
       },
     );
+    
     on<SelectCategoryEvent>((event, emit) async {
-      emit(CategorySelectedState());
+      emit(CategoryLoadedState(
+          selectedId: event.selectedId, categoryList: event.catList));
     });
   }
 }
