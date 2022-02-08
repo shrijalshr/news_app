@@ -8,21 +8,18 @@ class NewsModel {
     this.image,
     this.createdAt,
     this.updatedAt,
-    this.count,
-    this.type,
     this.username,
   });
 
   int? id;
-  int? categoryId;
+  String? categoryId;
   String? title;
   String? content;
   String? image;
   dynamic link;
   DateTime? createdAt;
   DateTime? updatedAt;
-  int? count;
-  int? type;
+
   String? username;
 
   factory NewsModel.fromJson(Map<String, dynamic> json) => NewsModel(
@@ -34,8 +31,6 @@ class NewsModel {
         image: json["image"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        count: json["count"],
-        type: json["type"],
         username: json["username"],
       );
 
@@ -48,8 +43,6 @@ class NewsModel {
         "image": image,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
-        "count": count,
-        "type": type,
         "username": username,
       };
 }

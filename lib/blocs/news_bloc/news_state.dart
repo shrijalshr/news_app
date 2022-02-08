@@ -9,7 +9,6 @@ abstract class NewsState extends Equatable {
 
 class NewsInitial extends NewsState {}
 
-
 class NewsLoadingState extends NewsState {}
 
 class NewsLoadedState extends NewsState {
@@ -18,6 +17,15 @@ class NewsLoadedState extends NewsState {
 
   @override
   List<Object> get props => [newsList];
+}
+
+class CatNewsLoadedState extends NewsState {
+  final List<NewsArticleModel> catNewsList;
+  const CatNewsLoadedState(
+    this.catNewsList,
+  );
+  @override
+  List<Object> get props => [catNewsList];
 }
 
 class NewsErrorState extends NewsState {

@@ -13,10 +13,10 @@ class CategoryLoadingState extends CategoryState {}
 
 class CategoryLoadedState extends CategoryState {
   final List<CategoryModel> categoryList;
-  final bool isSelected;
+  final String? selectedId;
 
   const CategoryLoadedState(
-      {required this.categoryList, this.isSelected = false});
+      {required this.categoryList, this.selectedId = "0"});
 
   @override
   List<Object> get props => [categoryList];
@@ -30,4 +30,8 @@ class CategoryErrorState extends CategoryState {
   List<Object> get props => [errorMessage];
 }
 
-class CategorySelectedState extends CategoryState {}
+class CategorySelectedState extends CategoryState {
+  final String categoryId;
+
+  const CategorySelectedState({required this.categoryId});
+}

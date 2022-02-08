@@ -9,20 +9,19 @@ class NewsArticleModel {
     this.createdAt,
     this.updatedAt,
     this.count,
-    this.type,
     this.username,
   });
 
   int? id;
-  int? categoryId;
+  String? categoryId;
   String? title;
   String? content;
   dynamic link;
   String? image;
   DateTime? createdAt;
   DateTime? updatedAt;
-  int? count;
-  int? type;
+  String? count;
+
   String? username;
 
   factory NewsArticleModel.fromJson(Map<String, dynamic> json) =>
@@ -36,7 +35,6 @@ class NewsArticleModel {
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         count: json["count"],
-        type: json["type"],
         username: json["username"],
       );
 
@@ -50,7 +48,6 @@ class NewsArticleModel {
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
         "count": count,
-        "type": type,
         "username": username,
       };
 }

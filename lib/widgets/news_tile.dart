@@ -23,7 +23,7 @@ class NewsTile extends StatelessWidget {
   final String? imgUrl;
   final String? userName;
   final String? updatedDate;
-  final int? categoryId;
+  final String? categoryId;
   @override
   Widget build(BuildContext context) {
     String? categoryTitle;

@@ -10,9 +10,9 @@ abstract class CategoryEvent extends Equatable {
 class GetCategoryEvent extends CategoryEvent {}
 
 class SelectCategoryEvent extends CategoryEvent {
-  final int selectedId;
-
-  const SelectCategoryEvent(this.selectedId);
+  final String selectedId;
+  final List<CategoryModel> catList;
+  const SelectCategoryEvent({required this.selectedId, required this.catList});
 
   @override
   List<Object> get props => [selectedId];

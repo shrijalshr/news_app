@@ -4,7 +4,7 @@ import 'package:news_app/blocs/category_bloc/category_bloc.dart';
 import 'package:news_app/models/category_model.dart';
 
 class CategoryRow extends StatelessWidget {
-  CategoryRow({
+  const CategoryRow({
     Key? key,
   }) : super(key: key);
 
@@ -13,13 +13,13 @@ class CategoryRow extends StatelessWidget {
     CategoryBloc _categoryBloc = BlocProvider.of<CategoryBloc>(context);
     _categoryBloc.add(GetCategoryEvent());
     return BlocBuilder<CategoryBloc, CategoryState>(
-        builder: (BuildContext context, CategoryState state) {
-      if (state is CategoryLoadingState) {
+        builder: (BuildContext context, CategoryState catstate) {
+      if (catstate is CategoryLoadingState) {
         return const CircularProgressIndicator();
-      } else if (state is CategoryLoadedState) {
-        List<CategoryModel> catList = state.categoryList;
+      } else if (catstate is CategoryLoadedState) {
+        List<CategoryModel> catList = catstate.categoryList;
         return Container(
-            padding: const EdgeInsets.all(4),
+            padding: const EdgeInsets.all(7),
             margin: const EdgeInsets.only(left: 10),
             decoration: const BoxDecoration(
               color: Color(0xFFf2f3f4),
@@ -32,16 +32,38 @@ class CategoryRow extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: catList
-                    .map((e) => CategoryPill(
-                          categoryId: e.id,
-                          categoryName: e.category,
-                        ))
-                    .toList(),
+                children: <Widget>[
+                      GestureDetector(
+                        onTap: () {
+                          BlocProvider.of<CategoryBloc>(context).add(
+                              SelectCategoryEvent(
+                                  selectedId: "0", catList: catList));
+                        },
+                        child: const CategoryPill(
+                          categoryName: "Latest",
+                        ),
+                      )
+                    ] +
+                    catList
+                        .map((e) => GestureDetector(
+                              onTap: () {
+                                BlocProvider.of<CategoryBloc>(context).add(
+                                    SelectCategoryEvent(
+                                        selectedId: e.id ?? "0",
+                                        catList: catList));
+                              },
+                              child: CategoryPill(
+                                categoryId: e.id,
+                                categoryName: e.category,
+                              ),
+                            ))
+                        .toList(),
               ),
             ));
-      } else if (state is CategoryErrorState) {
-        return Center(child: Text(state.errorMessage));
+      } else if (catstate is CategoryErrorState) {
+        return Center(child: Text(catstate.errorMessage));
+      } else if (catstate is CategorySelectedState) {
+        return const CircularProgressIndicator();
       } else {
         return const CircularProgressIndicator();
       }
@@ -53,22 +75,17 @@ class CategoryPill extends StatelessWidget {
   const CategoryPill(
       {Key? key, this.categoryId, this.categoryName, this.isSelected = false})
       : super(key: key);
-  final int? categoryId;
+  final String? categoryId;
   final String? categoryName;
   final bool isSelected;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        print(categoryId);
-      },
-      child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-          decoration: BoxDecoration(
-            color: isSelected ? Colors.white : const Color(0xFFf2f3f4),
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: Text(categoryName ?? "")),
-    );
+    return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.white : const Color(0xFFf2f3f4),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: Text(categoryName ?? ""));
   }
 }

@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:news_app/blocs/category_bloc/category_bloc.dart';
 import 'package:news_app/blocs/news_bloc/news_bloc.dart';
 import 'package:news_app/widgets/category_row.dart';
 import 'package:news_app/models/category_model.dart';
@@ -16,15 +17,17 @@ import 'package:news_app/widgets/news_tile.dart';
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
-  NewsBloc? _newsBloc;
   @override
   Widget build(BuildContext context) {
-    _newsBloc = BlocProvider.of<NewsBloc>(context);
-    _newsBloc?.add(StartEvent());
+    NewsBloc _newsBloc = BlocProvider.of<NewsBloc>(context);
+    _newsBloc.add(StartEvent());
+
+    CategoryBloc _catBloc = BlocProvider.of<CategoryBloc>(context);
+    _catBloc.add(GetCategoryEvent());
     final formatDate = DateFormat("E, MMMM D ");
     final today = formatDate.format(DateTime.now());
     final theme = Theme.of(context);
-    final size = MediaQuery.of(context).size; 
+    final size = MediaQuery.of(context).size;
     final double appBarHeight = size.height * .25;
     return SafeArea(
       child: Scaffold(
@@ -111,20 +114,69 @@ class HomePage extends StatelessWidget {
                     List<NewsArticleModel> newsList = [];
                     newsList = state.newsList;
 
-                    return Expanded(
-                      child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: newsList.length,
-                        itemBuilder: (context, index) {
-                          return NewsTile(
-                            newsId: newsList[index].id!,
-                            title: newsList[index].title,
-                            categoryId: newsList[index].categoryId,
-                            imgUrl: newsList[index].image,
-                            userName: newsList[index].username,
-                          ).containerPadding();
-                        },
-                      ),
+                    return BlocBuilder<CategoryBloc, CategoryState>(
+                      builder: (context, state) {
+                        if (state is CategoryLoadedState) {
+                          if (state.selectedId != "0") {
+                            final List<NewsArticleModel> catList = newsList
+                                .where((element) =>
+                                    element.id.toString() == state.selectedId)
+                                .toList();
+                            return catList.isEmpty
+                                ? Center(
+                                    child:
+                                        Image.asset("assets/images/image1.png"),
+                                  )
+                                : Expanded(
+                                    child: ListView.builder(
+                                      physics: const BouncingScrollPhysics(),
+                                      itemCount: catList.length,
+                                      itemBuilder: (context, index) {
+                                        return NewsTile(
+                                          newsId: catList[index].id!,
+                                          title: catList[index].title,
+                                          categoryId: catList[index].categoryId,
+                                          imgUrl: catList[index].image,
+                                          userName: catList[index].username,
+                                        ).containerPadding();
+                                      },
+                                    ),
+                                  );
+                          } else {
+                            return Expanded(
+                              child: ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: newsList.length,
+                                itemBuilder: (context, index) {
+                                  return NewsTile(
+                                    newsId: newsList[index].id!,
+                                    title: newsList[index].title,
+                                    categoryId: newsList[index].categoryId,
+                                    imgUrl: newsList[index].image,
+                                    userName: newsList[index].username,
+                                  ).containerPadding();
+                                },
+                              ),
+                            );
+                          }
+                        }
+
+                        return Expanded(
+                          child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: newsList.length,
+                            itemBuilder: (context, index) {
+                              return NewsTile(
+                                newsId: newsList[index].id!,
+                                title: newsList[index].title,
+                                categoryId: newsList[index].categoryId,
+                                imgUrl: newsList[index].image,
+                                userName: newsList[index].username,
+                              ).containerPadding();
+                            },
+                          ),
+                        );
+                      },
                     );
                   } else if (state is NewsErrorState) {
                     return Center(

@@ -4,7 +4,7 @@ class CategoryModel {
     this.category,
   });
 
-  int? id;
+  String? id;
   String? category;
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
